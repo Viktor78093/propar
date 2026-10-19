@@ -1,0 +1,517 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Демо: скрыто от поисковиков. После продажи удалить эту строку. -->
+<meta name="robots" content="noindex, nofollow">
+<title>ПроПар — русская баня на дровах с чаном</title>
+<meta name="description" content="Русская баня на дровах с банным чаном в лесу, с. Краснореченское. Работаем ежедневно с 10:00 до 02:00 по предварительной записи.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;800;900&family=Cormorant+Garamond:ital,wght@0,500;1,500;1,600&family=Marck+Script&display=swap" rel="stylesheet">
+<style>
+  /* Демо для показа владельцу. Фото и тексты из карточки ПроПар в 2ГИС. */
+  :root {
+    --ink: #12100d;
+    --ink-2: #1b1813;
+    --paper: #efe7da;
+    --text: #f3ede3;
+    --dim: #b7ab98;
+    --gold: #d8bf8a;
+    --wood: #8a5a33;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--ink); color: var(--text); font: 17px/1.65 "Montserrat", system-ui, sans-serif; }
+  a { color: inherit; text-decoration: none; }
+  img { display: block; max-width: 100%; }
+  .wrap { max-width: 1160px; margin: 0 auto; padding: 0 16px; }
+
+  /* Фирменная типографика как в их сторис:
+     жирный капс + курсивная подпись золотом */
+  .h {
+    font-weight: 900; text-transform: uppercase; letter-spacing: .01em;
+    line-height: 1.02; font-size: clamp(34px, 5.4vw, 64px);
+  }
+  .h em {
+    display: block; font-style: normal; color: var(--gold);
+  }
+  .sub {
+    font-family: "Cormorant Garamond", Georgia, serif; font-style: italic; font-weight: 500;
+    color: var(--gold); font-size: clamp(24px, 3vw, 34px); line-height: 1.15; margin-top: 10px;
+  }
+  .lead { color: #ddd3c4; max-width: 34em; }
+  .lead + .lead { margin-top: 1em; }
+
+  .logo {
+    font-family: "Cormorant Garamond", Georgia, serif; font-weight: 500;
+    font-size: 30px; letter-spacing: .02em; color: var(--text);
+  }
+
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+    padding: 16px 28px; font-weight: 600; font-size: 15px; letter-spacing: .04em; text-transform: uppercase;
+    border: 1.5px solid var(--gold); color: var(--ink); background: var(--gold);
+    transition: background .2s, color .2s;
+  }
+  .btn:hover { background: transparent; color: var(--gold); }
+  .btn.line { background: transparent; color: var(--text); border-color: rgba(243,237,227,.5); }
+  .btn.line:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* Шапка */
+  html { scroll-behavior: smooth; scroll-padding-top: 76px; }
+  header {
+    position: fixed; inset: 0 0 auto; z-index: 20; padding: 18px 0;
+    transition: background .25s, padding .25s, border-color .25s;
+    border-bottom: 1px solid transparent;
+  }
+  header.solid, header.open {
+    background: rgba(18,16,13,.96); padding: 12px 0; border-bottom-color: rgba(216,191,138,.18);
+  }
+  header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+  header nav { display: flex; gap: 30px; font-size: 14px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; }
+  header nav a { opacity: .85; }
+  header nav a:hover { opacity: 1; color: var(--gold); }
+  .tel { font-weight: 600; letter-spacing: .02em; }
+  .burger {
+    display: none; width: 44px; height: 44px; border: 0; background: none; cursor: pointer;
+    position: relative; margin-right: -10px;
+  }
+  .burger span, .burger span::before, .burger span::after {
+    position: absolute; left: 11px; width: 22px; height: 2px; background: var(--text); content: ""; transition: transform .2s, top .2s, background .2s;
+  }
+  .burger span { top: 21px; }
+  .burger span::before { left: 0; top: -7px; }
+  .burger span::after { left: 0; top: 7px; }
+  header.open .burger span { background: transparent; }
+  header.open .burger span::before { top: 0; transform: rotate(45deg); }
+  header.open .burger span::after { top: 0; transform: rotate(-45deg); }
+
+  /* Первый экран */
+  .hero {
+    position: relative; min-height: 100svh; display: flex; align-items: center;
+    background: #2a2118 center / cover no-repeat;
+    background-image: linear-gradient(rgba(10,8,6,.55), rgba(10,8,6,.55)),
+      url("https://i0.photo.2gis.com/photo-gallery/fb2f7c1a-a105-4f3d-8018-03399896b6c4.jpg");
+  }
+  .hero .wrap { width: 100%; padding-top: 90px; padding-bottom: 60px; }
+  .hero .h { font-size: clamp(44px, 8vw, 104px); }
+  .hero .lead { margin-top: 26px; font-size: 18px; }
+  .hero-note {
+    margin-top: 34px; font-family: "Cormorant Garamond", serif; font-style: italic;
+    font-size: 24px; color: #eee5d6;
+  }
+  .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 22px; }
+
+  /* Блоки «фото + текст» */
+  .split { display: grid; grid-template-columns: 1fr 1fr; min-height: 640px; }
+  .split .photo { background: #2a2118 center / cover no-repeat; min-height: 420px; }
+  .split .text { padding: 96px clamp(16px, 6vw, 88px); display: flex; flex-direction: column; justify-content: center; }
+  .split .text .lead { margin-top: 28px; }
+  .split.rev .photo { order: 2; }
+  .split.alt { background: var(--ink-2); }
+
+  ul.plain { list-style: none; margin-top: 28px; columns: 2; column-gap: 32px; }
+  ul.plain li { padding: 9px 0; border-bottom: 1px solid rgba(216,191,138,.18); break-inside: avoid; color: #e4dacb; font-size: 16px; }
+
+  .fill { margin-top: 30px; }
+  .fill div { display: grid; grid-template-columns: 170px 1fr; gap: 16px; padding: 16px 0; border-top: 1px solid rgba(216,191,138,.2); }
+  .fill b { font-weight: 800; text-transform: uppercase; font-size: 14px; letter-spacing: .05em; color: var(--gold); padding-top: 2px; }
+  .fill span { color: #ddd3c4; font-size: 16px; }
+  .small { margin-top: 22px; color: var(--dim); font-size: 14px; }
+
+  /* Программы парения */
+  .programs {
+    padding: 120px 0; text-align: center;
+    background: #2a2118 center / cover no-repeat;
+    background-image: linear-gradient(rgba(12,10,8,.78), rgba(12,10,8,.86)),
+      url("https://i5.photo.2gis.com/photo-gallery/624fc714-337f-4225-a466-24e444740b2f.jpg");
+  }
+  .programs .lead { margin: 26px auto 0; }
+  .prog-list { display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin: 56px auto 0; max-width: 820px; }
+  .prog { padding: 34px 24px; }
+  .prog + .prog { border-left: 1px solid rgba(216,191,138,.3); }
+  .prog .name { font-family: "Marck Script", cursive; font-size: 54px; color: var(--paper); line-height: 1.1; }
+  .prog p { color: var(--dim); font-size: 15px; margin-top: 10px; }
+  .programs .btn { margin-top: 40px; }
+
+  /* Фото */
+  .strip { display: grid; grid-template-columns: repeat(6, 1fr); }
+  .strip div { aspect-ratio: 1; background: #2a2118 center / cover no-repeat; }
+
+  /* Отзывы на светлом, как камень и дерево */
+  .reviews { background: var(--paper); color: #2a221a; padding: 110px 0; }
+  .reviews .h { color: #2a221a; }
+  .reviews .h em { color: var(--wood); }
+  .quotes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 48px; margin-top: 56px; }
+  .quotes blockquote { font-family: "Cormorant Garamond", serif; font-size: 23px; line-height: 1.35; font-style: italic; }
+  .quotes cite { display: block; margin-top: 16px; font: 600 13px/1 "Montserrat", sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--wood); font-style: normal; }
+  .reviews .src { margin-top: 48px; font-size: 14px; color: #6b5c4b; }
+  .reviews .src a { border-bottom: 1px solid currentColor; }
+
+  /* Запись */
+  .book { padding: 110px 0; background: var(--ink-2); }
+  .book-grid { display: grid; grid-template-columns: 1fr 1.25fr; gap: 64px; align-items: start; }
+  .book .lead { margin-top: 26px; }
+  .form { display: grid; grid-template-columns: 1fr 1fr; gap: 22px 24px; }
+  .form label { display: flex; flex-direction: column; gap: 6px; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: var(--dim); }
+  .form .wide { grid-column: 1 / -1; }
+  .form input, .form select, .form textarea {
+    font: 500 17px/1.4 "Montserrat", sans-serif; color: var(--text); letter-spacing: 0; text-transform: none;
+    background: transparent; border: 0; border-bottom: 1.5px solid rgba(216,191,138,.35);
+    padding: 10px 0; border-radius: 0; outline: none; width: 100%; color-scheme: dark;
+  }
+  .form select option { background: var(--ink-2); }
+  .form input:focus, .form select:focus, .form textarea:focus { border-color: var(--gold); }
+  .form textarea { resize: vertical; min-height: 46px; }
+  .checks { display: flex; flex-wrap: wrap; gap: 14px 28px; }
+  .checks label { flex-direction: row; align-items: center; gap: 10px; text-transform: none; letter-spacing: 0; font-size: 16px; color: #e4dacb; cursor: pointer; }
+  .checks input { width: 20px; height: 20px; accent-color: var(--gold); }
+  .send { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px; }
+  .send .btn { cursor: pointer; font-family: inherit; }
+  .form-note { font-size: 13px; color: var(--dim); line-height: 1.5; }
+  .form-msg { font-size: 15px; color: var(--gold); min-height: 1.4em; }
+  .form .err input, .form .err select { border-color: #d0705a; }
+
+  /* Контакты */
+  .contacts { padding: 110px 0 90px; }
+  .c-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 56px; margin-top: 48px; align-items: start; }
+  .c-row { padding: 18px 0; border-top: 1px solid rgba(216,191,138,.2); }
+  .c-row small { display: block; color: var(--dim); font-size: 13px; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 4px; }
+  .c-row div { font-size: 19px; font-weight: 500; }
+  .msg { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
+  .way { color: #ddd3c4; }
+  .way p + p { margin-top: 1em; }
+
+  footer { border-top: 1px solid rgba(216,191,138,.15); padding: 28px 0 36px; color: var(--dim); font-size: 14px; }
+  footer .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+
+  .mbar { display: none; }
+
+  @media (max-width: 900px) {
+    .burger { display: block; }
+    header nav {
+      display: none; position: absolute; top: 100%; left: 0; right: 0;
+      flex-direction: column; gap: 0; padding: 8px 16px 20px;
+      background: rgba(18,16,13,.98); border-bottom: 1px solid rgba(216,191,138,.18);
+      font-size: 16px;
+    }
+    header nav a { padding: 14px 0; border-bottom: 1px solid rgba(216,191,138,.12); opacity: 1; }
+    header nav a:last-child { border-bottom: 0; }
+    header.open nav { display: flex; }
+    .split, .split.rev { grid-template-columns: minmax(0, 1fr); min-height: 0; }
+    .fill div { grid-template-columns: minmax(0, 1fr); }
+    .split.rev .photo { order: 0; }
+    .split .photo { min-height: 300px; aspect-ratio: 4 / 3; }
+    .split .text { padding: 56px 16px 64px; }
+    ul.plain { columns: 1; }
+    .fill div { grid-template-columns: 1fr; gap: 4px; }
+    .prog-list { grid-template-columns: 1fr; }
+    .prog + .prog { border-left: 0; border-top: 1px solid rgba(216,191,138,.3); }
+    .programs, .reviews, .contacts { padding: 72px 0; }
+    .strip { grid-template-columns: repeat(3, 1fr); }
+    .quotes { grid-template-columns: 1fr; gap: 36px; }
+    .c-grid { grid-template-columns: 1fr; gap: 40px; }
+    .book { padding: 72px 0; }
+    .book-grid { grid-template-columns: minmax(0, 1fr); gap: 40px; }
+    .form { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 20px 16px; }
+    .send .btn { flex: 1 1 100%; }
+    .mbar {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+      position: fixed; inset: auto 0 0; z-index: 10;
+      padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+      background: rgba(18,16,13,.96); border-top: 1px solid rgba(216,191,138,.25);
+    }
+    .mbar .btn { padding: 14px 10px; font-size: 13px; }
+    body { padding-bottom: 74px; }
+  }
+  @media (max-width: 480px) {
+    .tel { display: none; }
+    .hero-actions .btn { flex: 1 1 100%; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a class="logo" href="#">ПроПар</a>
+    <nav>
+      <a href="#banya">Баня</a>
+      <a href="#chan">Чан</a>
+      <a href="#programs">Парение</a>
+      <a href="#book">Запись</a>
+      <a href="#contacts">Контакты</a>
+    </nav>
+    <a class="tel" href="tel:+79940744488">+7 994 074-44-88</a>
+    <button class="burger" type="button" aria-label="Меню" aria-expanded="false"><span></span></button>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <h1 class="h">Русская баня<em>на дровах</em></h1>
+    <p class="lead">Банный домик с горячим чаном в лесу под Хабаровском. Дальше вас только лес: ни соседей, ни городской суеты.</p>
+    <p class="hero-note">Работаем ежедневно с 10:00 до 02:00 по предварительной записи</p>
+    <div class="hero-actions">
+      <a class="btn" href="#book">Записаться онлайн</a>
+      <a class="btn line" href="tel:+79940744488">Позвонить</a>
+    </div>
+  </div>
+</section>
+
+<section class="split" id="banya">
+  <div class="photo" style="background-image:url('https://i8.photo.2gis.com/photo-gallery/a1624780-413b-49cf-9aac-dce004b9a54e.jpg')"></div>
+  <div class="text">
+    <h2 class="h">Настоящая<em>русская баня</em></h2>
+    <p class="sub">для души и лёгкого пара</p>
+    <p class="lead">Традиционное парение веником, жаркая парная и аромат настоящих дров. Температуру регулируете сами, веник запарим к вашему приезду.</p>
+    <p class="lead">Домик рассчитан на компанию до 8 человек. Стоимость от 2 500 ₽ в час.</p>
+  </div>
+</section>
+
+<section class="split rev alt">
+  <div class="photo" style="background-image:url('https://i3.photo.2gis.com/photo-gallery/e429c3fc-800c-42d7-8526-d838cc456293.jpg')"></div>
+  <div class="text">
+    <h2 class="h">После пара<em>время для отдыха</em></h2>
+    <p class="lead">Комната отдыха с мягким диваном, камином и панорамным окном в лес. С собой можно ничего не брать.</p>
+    <ul class="plain">
+      <li>Душ с горячей водой</li>
+      <li>Камин</li>
+      <li>Smart TV и колонка</li>
+      <li>Чайник, микроволновка</li>
+      <li>Посуда для чаепития</li>
+      <li>Чай на травах</li>
+      <li>Настольные игры</li>
+      <li>Wi-Fi</li>
+      <li>Полотенца, шапочки, тапочки</li>
+      <li>Фен и средства гигиены</li>
+    </ul>
+  </div>
+</section>
+
+<section class="split" id="chan">
+  <div class="photo" style="background-image:url('https://i3.photo.2gis.com/photo-gallery/4de20910-bffe-4417-b228-3516d4f95b7d.jpg')"></div>
+  <div class="text">
+    <h2 class="h">Банный чан</h2>
+    <p class="sub">особенный банный ритуал</p>
+    <p class="lead">Горячий уличный чан до 8 человек. Вода нагревается до 38–42°, можно выбрать наполнение:</p>
+    <div class="fill">
+      <div><b>Хвойный</b><span>насыщенный аромат хвои, как после прогулки по лесу</span></div>
+      <div><b>Цитрусовый</b><span>свежий, яркий и бодрящий</span></div>
+      <div><b>Хвоя и цитрус</b><span>свежесть цитрусов и глубокий аромат хвои</span></div>
+    </div>
+    <p class="small">Чан нужно заказать минимум за 5 часов до визита.</p>
+  </div>
+</section>
+
+<section class="split rev alt">
+  <div class="photo" style="background-image:url('https://i4.photo.2gis.com/photo-gallery/1d260ccc-f688-413d-a0cf-3c181ea7ed3d.jpg')"></div>
+  <div class="text">
+    <h2 class="h">Отдых<em>на свежем воздухе</em></h2>
+    <p class="lead">Закрытая беседка с грилем, где уютно в любую погоду. Можно приготовить мясо и овощи и неспешно посидеть с семьёй или друзьями.</p>
+    <ul class="plain">
+      <li>Гриль</li>
+      <li>Большой стол</li>
+      <li>Лавки для гостей</li>
+      <li>Раковина</li>
+      <li>Кондиционер</li>
+      <li>Мангальная зона</li>
+      <li>Шезлонги</li>
+      <li>Качели с сеном</li>
+    </ul>
+  </div>
+</section>
+
+<section class="programs" id="programs">
+  <div class="wrap">
+    <h2 class="h">Программы парения</h2>
+    <p class="sub">с пармастером</p>
+    <p class="lead">Парение по записи: знакомство с паром, работа вениками, отдых и чай между заходами.</p>
+    <div class="prog-list">
+      <div class="prog">
+        <div class="name">Деревенская</div>
+        <p>Состав программы и стоимость уточняйте по телефону</p>
+      </div>
+      <div class="prog">
+        <div class="name">Царская</div>
+        <p>Состав программы и стоимость уточняйте по телефону</p>
+      </div>
+    </div>
+    <a class="btn" href="tel:+79940744488">Узнать стоимость</a>
+  </div>
+</section>
+
+<div class="strip">
+  <div style="background-image:url('https://i1.photo.2gis.com/photo-gallery/607d1939-ceb9-4556-a7c3-0f8c27687612_656x340.jpg')"></div>
+  <div style="background-image:url('https://i6.photo.2gis.com/photo-gallery/fbd0530c-45fa-46b9-8196-a814e7e60510_656x340.jpg')"></div>
+  <div style="background-image:url('https://i5.photo.2gis.com/photo-gallery/4da3363d-f766-4194-830a-be7a2f9b28fe_656x340.jpg')"></div>
+  <div style="background-image:url('https://i2.photo.2gis.com/photo-gallery/a403f811-ee41-4062-bd8f-c75ddf286939_656x340.jpg')"></div>
+  <div style="background-image:url('https://i1.photo.2gis.com/photo-gallery/54d7e763-dfdd-4fd0-a0f4-027e3f4e66f2_656x340.jpg')"></div>
+  <div style="background-image:url('https://i8.photo.2gis.com/photo-gallery/01225f11-d504-4d71-8629-c2886b785f60_656x340.jpg')"></div>
+</div>
+
+<section class="reviews">
+  <div class="wrap">
+    <h2 class="h">Что пишут<em>наши гости</em></h2>
+    <div class="quotes">
+      <blockquote>«Душевное место, в тихом и красивом месте. С собой можно ничего не брать. Всё продумано.»<cite>Татьяна</cite></blockquote>
+      <blockquote>«Никаких соседей, всё внутри леса, всё новое, чистое, красивое. Самое лучшее место, где мы были!»<cite>Дарья</cite></blockquote>
+      <blockquote>«Хозяин очень добрый и внимательный. Из чана мы не хотели вылезать.»<cite>Кристина</cite></blockquote>
+    </div>
+    <p class="src">Рейтинг 5,0 и 47 отзывов в <a href="https://2gis.ru/khabarovsk/firm/70000001097240162/tab/reviews" target="_blank" rel="noopener">2ГИС</a></p>
+  </div>
+</section>
+
+<section class="book" id="book">
+  <div class="wrap book-grid">
+    <div>
+      <h2 class="h">Записаться<em>в баню</em></h2>
+      <p class="sub">без звонков, в пару касаний</p>
+      <p class="lead">Выберите дату и время, отметьте чан или пармастера. Заявка уйдёт нам в мессенджер, и мы подтвердим свободное время.</p>
+      <p class="lead">Чан заказывайте минимум за 5 часов до визита.</p>
+    </div>
+
+    <form class="form" id="bookForm" novalidate>
+      <label>Дата<input type="date" name="date" required></label>
+      <label>Время
+        <select name="time" required>
+          <option value="">Выберите</option>
+          <option>10:00</option><option>11:00</option><option>12:00</option><option>13:00</option>
+          <option>14:00</option><option>15:00</option><option>16:00</option><option>17:00</option>
+          <option>18:00</option><option>19:00</option><option>20:00</option><option>21:00</option>
+          <option>22:00</option><option>23:00</option>
+        </select>
+      </label>
+      <label>Сколько часов
+        <select name="hours">
+          <option>2</option><option selected>3</option><option>4</option><option>5</option><option>6 и больше</option>
+        </select>
+      </label>
+      <label>Гостей
+        <select name="guests">
+          <option>1</option><option selected>2</option><option>3</option><option>4</option>
+          <option>5</option><option>6</option><option>7</option><option>8</option>
+        </select>
+      </label>
+      <div class="wide checks">
+        <label><input type="checkbox" name="chan"> Банный чан</label>
+        <label><input type="checkbox" name="master"> Парение с пармастером</label>
+      </div>
+      <label>Имя<input type="text" name="name" autocomplete="given-name" required></label>
+      <label>Телефон<input type="tel" name="phone" autocomplete="tel" placeholder="+7" required></label>
+      <label class="wide">Комментарий<textarea name="comment" rows="1" placeholder="Например: день рождения, нужен мангал"></textarea></label>
+      <div class="wide send">
+        <button class="btn" type="submit" data-via="wa">Отправить в WhatsApp</button>
+        <button class="btn line" type="submit" data-via="max">Отправить в MAX</button>
+      </div>
+      <p class="wide form-msg" id="formMsg" role="status"></p>
+      <p class="wide form-note">Нажимая кнопку, вы соглашаетесь на обработку имени и телефона для записи. Данные уходят только владельцу бани.</p>
+    </form>
+  </div>
+</section>
+
+<section class="contacts" id="contacts">
+  <div class="wrap">
+    <h2 class="h">Как нас<em>найти</em></h2>
+    <div class="c-grid">
+      <div>
+        <div class="c-row"><small>Адрес</small><div>с. Краснореченское, Елисейская ул., 28</div></div>
+        <div class="c-row"><small>Режим работы</small><div>Ежедневно с 10:00 до 02:00</div></div>
+        <div class="c-row"><small>Запись</small><div><a href="tel:+79940744488">+7 994 074-44-88</a></div></div>
+        <div class="msg">
+          <a class="btn" href="https://wa.me/79940744488" target="_blank" rel="noopener">WhatsApp</a>
+          <a class="btn line" href="https://max.ru/u/f9LHodD0cOLFGC-JdcPwseD9VryP-S-93vzdWYANIjnL7uJ5EtS-QwW4sTA" target="_blank" rel="noopener">MAX</a>
+          <a class="btn line" href="https://vk.com/propar_27" target="_blank" rel="noopener">ВКонтакте</a>
+        </div>
+      </div>
+      <div class="way">
+        <p>Баня стоит на окраине Краснореченского, у самого леса. Оплата наличными или переводом.</p>
+        <p>Бронирование по предварительной записи: <a href="#book" style="border-bottom:1px solid currentColor">оставьте заявку</a>, позвоните или напишите, и мы подтвердим свободное время.</p>
+        <p style="margin-top:26px"><a class="btn line" href="https://2gis.ru/khabarovsk/firm/70000001097240162" target="_blank" rel="noopener">Маршрут в 2ГИС</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>© ПроПар, русская баня</span>
+    <span>с. Краснореченское, Хабаровский район</span>
+  </div>
+</footer>
+
+<div class="mbar">
+  <a class="btn" href="#book">Записаться</a>
+  <a class="btn line" href="tel:+79940744488">Позвонить</a>
+</div>
+
+<script>
+// Шапка: фон при прокрутке, меню на телефоне
+(function () {
+  const header = document.querySelector("header");
+  const burger = header.querySelector(".burger");
+  const onScroll = () => header.classList.toggle("solid", window.scrollY > 40);
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+  const setOpen = (v) => { header.classList.toggle("open", v); burger.setAttribute("aria-expanded", v); };
+  burger.addEventListener("click", () => setOpen(!header.classList.contains("open")));
+  header.querySelectorAll("nav a").forEach((a) => a.addEventListener("click", () => setOpen(false)));
+})();
+</script>
+
+<script>
+// Заявка уходит владельцу в мессенджер готовым сообщением.
+// Позже заменим на бота, который сам присылает заявку в MAX/Telegram.
+(function () {
+  const WA_PHONE = "79940744488";
+  const MAX_LINK = "https://max.ru/u/f9LHodD0cOLFGC-JdcPwseD9VryP-S-93vzdWYANIjnL7uJ5EtS-QwW4sTA";
+
+  const form = document.getElementById("bookForm");
+  const msg = document.getElementById("formMsg");
+  const date = form.elements.date;
+  const pad = (n) => String(n).padStart(2, "0");
+  const today = new Date();
+  date.min = `${today.getFullYear()}-${pad(today.getMonth() + 1)}-${pad(today.getDate())}`;
+
+  let via = "wa";
+  form.querySelectorAll("button[data-via]").forEach((b) => b.addEventListener("click", () => (via = b.dataset.via)));
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const f = form.elements;
+    const required = [f.date, f.time, f.name, f.phone];
+    let ok = true;
+    required.forEach((el) => {
+      const bad = !el.value.trim() || (el === f.phone && el.value.replace(/\D/g, "").length < 10);
+      el.closest("label").classList.toggle("err", bad);
+      if (bad) ok = false;
+    });
+    if (!ok) { msg.textContent = "Заполните дату, время, имя и телефон."; return; }
+
+    const [y, m, d] = f.date.value.split("-");
+    const extras = [f.chan.checked && "банный чан", f.master.checked && "парение с пармастером"].filter(Boolean);
+    const text = [
+      "Здравствуйте! Хочу записаться в баню (заявка с сайта).",
+      `Дата: ${d}.${m}.${y}, с ${f.time.value}`,
+      `Часов: ${f.hours.value}, гостей: ${f.guests.value}`,
+      extras.length ? `Дополнительно: ${extras.join(", ")}` : "",
+      `Имя: ${f.name.value.trim()}`,
+      `Телефон: ${f.phone.value.trim()}`,
+      f.comment.value.trim() ? `Комментарий: ${f.comment.value.trim()}` : "",
+    ].filter(Boolean).join("\n");
+
+    if (via === "wa") {
+      window.open(`https://wa.me/${WA_PHONE}?text=${encodeURIComponent(text)}`, "_blank", "noopener");
+      msg.textContent = "Открываем WhatsApp, осталось нажать «Отправить».";
+    } else {
+      try { await navigator.clipboard.writeText(text); msg.textContent = "Текст заявки скопирован. Вставьте его в чат MAX и отправьте."; }
+      catch { msg.textContent = "Откроется MAX. Напишите дату, время и количество гостей."; }
+      window.open(MAX_LINK, "_blank", "noopener");
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

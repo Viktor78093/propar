@@ -173,6 +173,19 @@
   .form-msg { font-size: 15px; color: var(--gold); min-height: 1.4em; }
   .form .err input, .form .err select { border-color: #d0705a; }
 
+  /* Окно для MAX */
+  .modal { position: fixed; inset: 0; z-index: 50; background: rgba(8,7,5,.78); display: grid; place-items: center; padding: 16px; }
+  .modal[hidden] { display: none; }
+  .modal-box { position: relative; width: 100%; max-width: 460px; max-height: 92svh; overflow: auto; background: var(--ink-2); border: 1px solid rgba(216,191,138,.35); padding: 32px 26px 26px; }
+  .modal-box h3 { font-weight: 900; text-transform: uppercase; font-size: 26px; line-height: 1.1; }
+  .modal-box .ok { margin-top: 8px; font-family: "Cormorant Garamond", serif; font-style: italic; font-size: 22px; color: var(--gold); }
+  .modal-box pre { margin-top: 16px; padding: 14px; background: var(--ink); border-left: 2px solid var(--gold); white-space: pre-wrap; font: 14px/1.5 "Montserrat", sans-serif; color: #ddd3c4; user-select: all; -webkit-user-select: all; }
+  .modal-box ol { margin: 18px 0 0 20px; color: #e4dacb; font-size: 15px; }
+  .modal-box li { padding: 3px 0; }
+  .modal-actions { display: flex; flex-direction: column; gap: 10px; margin-top: 22px; }
+  .modal-actions .btn { cursor: pointer; font-family: inherit; width: 100%; }
+  .modal-x { position: absolute; top: 8px; right: 10px; width: 40px; height: 40px; border: 0; background: none; color: var(--text); font-size: 30px; line-height: 1; cursor: pointer; }
+
   /* Контакты */
   .contacts { padding: 110px 0 90px; }
   .c-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 56px; margin-top: 48px; align-items: start; }
@@ -441,6 +454,25 @@
   </div>
 </footer>
 
+<div class="modal" id="maxModal" hidden>
+  <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="maxTitle">
+    <button class="modal-x" type="button" data-close aria-label="Закрыть">×</button>
+    <h3 id="maxTitle">Заявка готова</h3>
+    <p class="ok" id="maxCopied">Текст уже скопирован ✓</p>
+    <p class="ok" id="maxManual" hidden>Скопируйте текст ниже: нажмите на него и удерживайте.</p>
+    <pre id="maxText"></pre>
+    <ol>
+      <li>Нажмите «Открыть чат в MAX»</li>
+      <li>Нажмите на поле сообщения и удерживайте → <b>Вставить</b></li>
+      <li>Нажмите <b>Отправить</b></li>
+    </ol>
+    <div class="modal-actions">
+      <button class="btn" type="button" id="maxOpen">Открыть чат в MAX</button>
+      <button class="btn line" type="button" id="maxCopyAgain">Скопировать ещё раз</button>
+    </div>
+  </div>
+</div>
+
 <div class="mbar">
   <a class="btn" href="#book">Записаться</a>
   <a class="btn line" href="tel:+79940744488">Позвонить</a>
@@ -505,11 +537,49 @@
       window.open(`https://wa.me/${WA_PHONE}?text=${encodeURIComponent(text)}`, "_blank", "noopener");
       msg.textContent = "Открываем WhatsApp, осталось нажать «Отправить».";
     } else {
-      try { await navigator.clipboard.writeText(text); msg.textContent = "Текст заявки скопирован. Вставьте его в чат MAX и отправьте."; }
-      catch { msg.textContent = "Откроется MAX. Напишите дату, время и количество гостей."; }
-      window.open(MAX_LINK, "_blank", "noopener");
+      // MAX не умеет открывать чат с готовым текстом, поэтому копируем заявку и подсказываем, куда вставить
+      maxText.textContent = text;
+      maxCopied.hidden = true;
+      maxManual.hidden = true;
+      maxModal.hidden = false;
+      document.body.style.overflow = "hidden";
+      msg.textContent = "";
+      const copied = await copyText(text);
+      maxCopied.hidden = !copied;
+      maxManual.hidden = copied;
     }
   });
+
+  async function copyText(t) {
+    try {
+      const timeout = new Promise((_, no) => setTimeout(no, 1500));
+      await Promise.race([navigator.clipboard.writeText(t), timeout]);
+      return true;
+    } catch {}
+    const ta = document.createElement("textarea");
+    ta.value = t; ta.setAttribute("readonly", ""); ta.style.position = "fixed"; ta.style.opacity = "0";
+    document.body.appendChild(ta); ta.select();
+    let ok = false; try { ok = document.execCommand("copy"); } catch {}
+    ta.remove(); return ok;
+  }
+
+  const maxModal = document.getElementById("maxModal");
+  const maxText = document.getElementById("maxText");
+  const maxCopied = document.getElementById("maxCopied");
+  const maxManual = document.getElementById("maxManual");
+  const closeModal = () => { maxModal.hidden = true; document.body.style.overflow = ""; };
+  document.getElementById("maxOpen").addEventListener("click", () => {
+    window.open(MAX_LINK, "_blank", "noopener");
+    msg.textContent = "Вставьте заявку в чат MAX и нажмите «Отправить».";
+    closeModal();
+  });
+  const copyAgain = document.getElementById("maxCopyAgain");
+  copyAgain.addEventListener("click", async () => {
+    const ok = await copyText(maxText.textContent);
+    copyAgain.textContent = ok ? "Скопировано ✓" : "Выделите текст выше";
+  });
+  maxModal.addEventListener("click", (e) => { if (e.target === maxModal || e.target.closest("[data-close]")) closeModal(); });
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !maxModal.hidden) closeModal(); });
 })();
 </script>
 
